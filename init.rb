@@ -24,7 +24,7 @@ Redmine::Plugin.register :redmine_plus_automation do
   name 'Redmine Plus Automation plugin'
   author 'Arean Narrayan'
   description 'This is an automation plugin for Redmine'
-  version '0.1.1'
+  version '1.0.0'
   url 'https://github.com/Arean82/redmine_plus_automation'
   author_url 'https://github.com/Arean82'
 
