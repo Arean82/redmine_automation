@@ -1,0 +1,42 @@
+<div class="box tabular">
+  <p>
+    <label for="settings_scheduler_enabled"><%= l(:label_scheduler_enabled) %></label>
+    <%= check_box_tag 'settings[scheduler_enabled]', '1', @settings['scheduler_enabled'] == '1' %>
+    <em class="info"><%= l(:label_scheduler_enabled_info) %></em>
+  </p>
+
+  <p>
+    <label for="settings_scheduler_interval"><%= l(:label_scheduler_interval) %></label>
+    <%= text_field_tag 'settings[scheduler_interval]', @settings['scheduler_interval'], size: 5 %>
+    <%= select_tag 'settings[scheduler_unit]',
+          options_for_select(
+            [l(:label_units_minutes), l(:label_units_hours), l(:label_units_days)].zip(%w[minutes hours days]),
+            @settings['scheduler_unit']
+          ) %>
+    <em class="info"><%= l(:label_scheduler_interval_info) %></em>
+  </p>
+
+  <p>
+    <label for="settings_log_retention_days"><%= l(:label_log_retention_days) %></label>
+    <%= text_field_tag 'settings[log_retention_days]', @settings['log_retention_days'], size: 5 %>
+    <em class="info"><%= l(:label_log_retention_days_info) %></em>
+  </p>
+
+  <p>
+    <label for="settings_webhook_timeout"><%= l(:label_webhook_timeout) %></label>
+    <%= text_field_tag 'settings[webhook_timeout]', @settings['webhook_timeout'], size: 5 %>
+    <em class="info"><%= l(:label_webhook_timeout_info) %></em>
+  </p>
+
+  <p>
+    <label for="settings_webhook_allowed_hosts"><%= l(:label_webhook_allowed_hosts) %></label>
+    <%= text_field_tag 'settings[webhook_allowed_hosts]', @settings['webhook_allowed_hosts'], size: 60 %>
+    <em class="info"><%= l(:label_webhook_allowed_hosts_info) %></em>
+  </p>
+
+  <p>
+    <label for="settings_debug_mode"><%= l(:label_debug_mode) %></label>
+    <%= check_box_tag 'settings[debug_mode]', '1', @settings['debug_mode'] == '1' %>
+    <em class="info"><%= l(:label_debug_mode_info) %></em>
+  </p>
+</div>

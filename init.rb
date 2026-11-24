@@ -30,6 +30,16 @@ Redmine::Plugin.register :redmine_plus_automation do
 
   requires_redmine version_or_higher: '5.0'
 
+  settings default: {
+    scheduler_enabled: '1',
+    scheduler_interval: '5',
+    scheduler_unit: 'minutes',
+    log_retention_days: '30',
+    webhook_timeout: '10',
+    webhook_allowed_hosts: '',
+    debug_mode: '0'
+  }, partial: 'settings/redmine_plus_automation_settings'
+
   menu :admin_menu, :automation_rules, { controller: 'automation_rules', action: 'index' },
        caption: :label_automation_rules,
        html: { class: 'icon' },

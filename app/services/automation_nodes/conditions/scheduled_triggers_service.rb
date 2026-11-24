@@ -22,11 +22,19 @@ module AutomationNodes
       private
 
       def set_next_run(scheduled_trigger)
-        next_run = DateTime.now #TODO calculate next run based on current time and next_run_date/time
+        interval_value = scheduled_trigger.interval_value["value"].to_i
+        interval_unit = scheduled_trigger.interval["value"]
 
-        if scheduled_trigger.interval_value["value"] && scheduled_trigger.interval["value"]
-          next_run += scheduled_trigger.interval_value["value"].to_i.send(scheduled_trigger.interval["value"])
-        end
+        next_run = Time.current
+        next_run +=
+          case interval_unit
+          when "minutes" then interval_value.minutes
+          when "hours"   then interval_value.hours
+          when "days"    then interval_value.days
+          when "weeks"   then interval_value.weeks
+          when "months"  then interval_value.months
+          else 0
+          end
 
         scheduled_trigger.update!(
           next_run_date: next_run.strftime("%Y-%m-%d"),

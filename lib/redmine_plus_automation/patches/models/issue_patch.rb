@@ -31,6 +31,7 @@ module RedminePlusAutomation
             ::AutomationNodes::Triggers::ValueChanged.trigger!(self)
             ::AutomationNodes::Triggers::IssueMoved.trigger!(self)
             ::AutomationNodes::Triggers::IssueTransitioned.trigger!(self)
+            ::AutomationNodes::Triggers::IssueAssigned.trigger!(self)
           end
 
           def automation_trigger_deleted

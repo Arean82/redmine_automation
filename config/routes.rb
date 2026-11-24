@@ -7,8 +7,12 @@ resources :automation_rules do
   end
   member do
     put :update_nodes
+    post :copy
+    post :toggle
   end
 end
+
+post 'automation_webhooks', to: 'automation_webhooks#receive'
 
 resources :automation_pipelines, only: [:index] do
   collection do

@@ -19,6 +19,20 @@
                               disabled: !@can[:edit] %>
       </li>
       <li>
+        <%= context_menu_link sprite_icon('copy', l(:button_copy)),
+                              copy_automation_rule_path(@automation_rule, project_id: params[:project_id]),
+                              method: :post,
+                              class: 'icon icon-copy',
+                              disabled: !@can[:edit] %>
+      </li>
+      <li>
+        <%= context_menu_link sprite_icon(@automation_rule.enabled? ? 'cancel' : 'checked', @automation_rule.enabled? ? l(:button_disable) : l(:button_enable)),
+                              toggle_automation_rule_path(@automation_rule, project_id: params[:project_id]),
+                              method: :post,
+                              class: 'icon',
+                              disabled: !@can[:edit] %>
+      </li>
+      <li>
         <%= context_menu_link sprite_icon('del', l(:button_delete)),
                               automation_rule_path(@automation_rule, project_id: params[:project_id]),
                               method: :delete,

@@ -12,6 +12,24 @@ en:
   label_automation_rules_visibility_all: All automation rules
   label_automation_rules_visibility_own: Automation rules created by the user
   label_user_automation: "Automation User"
+  label_scheduler_enabled: "Enable scheduled triggers"
+  label_scheduler_enabled_info: "Run the scheduled-trigger job on a recurring interval."
+  label_scheduler_interval: "Scheduler interval"
+  label_scheduler_interval_info: "How often the scheduler checks for due scheduled triggers."
+  label_units_minutes: "minutes"
+  label_units_hours: "hours"
+  label_units_days: "days"
+  label_log_retention_days: "Log retention (days)"
+  label_log_retention_days_info: "Automation logs older than this many days are purged. 0 keeps them forever."
+  label_webhook_timeout: "Webhook timeout (seconds)"
+  label_webhook_timeout_info: "Timeout for the Send Web Request action."
+  label_webhook_allowed_hosts: "Webhook allowed hosts"
+  label_webhook_allowed_hosts_info: "Comma-separated hostnames allowed for web requests. Leave blank to allow any."
+  label_debug_mode: "Debug mode"
+  label_debug_mode_info: "Write extra detail to log/production.log."
+  button_copy: "Copy"
+  button_enable: "Enable"
+  button_disable: "Disable"
   activerecord:
     attributes:
       automation_nodes:
@@ -129,6 +147,13 @@ en:
           success: "The following issue passed the RQL query: %{entity}"
           skipped: "The following issue did not pass the RQL query: %{entity}"
           failure_config: "Ensure the RQL query is configured correctly"
+      related_items:
+        title: "Related items condition"
+        description: "Checks whether related issues meet the specified criteria."
+        messages:
+          success: "The following issue passed the related items condition: %{entity}"
+          skipped: "The following issue did not pass the related items condition: %{entity}"
+          failure_config: "Ensure the related items condition is configured correctly"
     branches:
       for_each:
         title: "Branch rule / related issues"

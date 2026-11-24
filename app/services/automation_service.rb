@@ -59,6 +59,11 @@ class AutomationService
     RedminePlusAutomation::Tokens::Processor.resolve_token(token, context) || token
   end
 
+  def debug(message)
+    settings = Setting.plugin_redmine_plus_automation || {}
+    Rails.logger.info("[automation] #{message}") if settings['debug_mode'] == '1'
+  end
+
   def node_message(key, options = {})
     options[:entity] ||= pipeline.entity_name
     node.node_l("messages.#{key}", options)

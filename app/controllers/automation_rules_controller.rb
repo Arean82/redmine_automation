@@ -11,7 +11,7 @@ class AutomationRulesController < ApplicationController
   before_action :find_optional_project
   before_action :authorize_global, if: -> { User.current.admin? }
   before_action :authorize, if: -> { !User.current.admin? }
-  before_action :find_automation_rule, only: [:edit, :update, :show, :destroy, :update_nodes]
+  before_action :find_automation_rule, only: [:edit, :update, :show, :destroy, :update_nodes, :copy, :toggle]
   before_action :find_automation_rules, only: [:context_menu]
   before_action :set_main_menu
 
@@ -117,6 +117,49 @@ class AutomationRulesController < ApplicationController
       format.html { redirect_back_or_default automation_rules_path(project_id: params[:project_id]) }
       format.js
       format.api { render_api_ok }
+    end
+  end
+
+  def copy
+    new_rule = @automation_rule.dup
+    new_rule.name = "#{@automation_rule.name} (#{l(:label_copy)})"
+    new_rule.author = User.current
+    new_rule.enabled = false
+
+    uuid_map = {}
+
+    new_rule.transaction do
+      new_rule.project_ids = @automation_rule.project_ids
+      new_rule.save!
+
+      @automation_rule.automation_nodes.sorted.each do |node|
+        new_uuid = SecureRandom.uuid
+        uuid_map[node.uuid] = new_uuid
+
+        new_node = node.dup
+        new_node.uuid = new_uuid
+        new_node.parent_node_uuid = node.parent_node_uuid
+        new_node.automation_rule = new_rule
+        new_node.save!
+      end
+
+      new_rule.automation_nodes.each do |node|
+        if node.parent_node_uuid && uuid_map[node.parent_node_uuid]
+          node.update_column(:parent_node_uuid, uuid_map[node.parent_node_uuid])
+        end
+      end
+    end
+
+    flash[:notice] = l(:notice_successful_create)
+    redirect_to automation_rule_path(new_rule, project_id: @project&.identifier)
+  end
+
+  def toggle
+    @automation_rule.update(enabled: !@automation_rule.enabled?)
+
+    respond_to do |format|
+      format.html { redirect_back_or_default automation_rules_path(project_id: params[:project_id]) }
+      format.js
     end
   end
 

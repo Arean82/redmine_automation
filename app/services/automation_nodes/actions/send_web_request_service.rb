@@ -19,10 +19,38 @@ module AutomationNodes
         headers = prepare_headers
         body = prepare_body
 
-        response = HTTParty.send(method.downcase, url, headers: headers, body: body)
+        validate_host!(url)
+
+        settings = Setting.plugin_redmine_plus_automation || {}
+        timeout = (settings['webhook_timeout'].presence || 10).to_i
+        retries = 2
+
+        response = nil
+        (retries + 1).times do |attempt|
+          begin
+            debug("Sending #{method} request to #{url} (attempt #{attempt + 1})")
+            response = HTTParty.send(method.downcase, url, headers: headers, body: body, timeout: timeout)
+            break
+          rescue StandardError => e
+            raise e if attempt == retries
+
+            sleep 1
+          end
+        end
 
         validate_response(response)
         response
+      end
+
+      def validate_host!(request_url)
+        settings = Setting.plugin_redmine_plus_automation || {}
+        allowed = settings['webhook_allowed_hosts'].to_s.split(",").map(&:strip).reject(&:blank?)
+        return if allowed.empty?
+
+        host = URI.parse(request_url).host
+        return if allowed.any? { |h| host == h || host.to_s.end_with?(".#{h}") }
+
+        raise WebRequestCodeError, "Host #{host} is not in the allowed hosts list"
       end
 
       def url
