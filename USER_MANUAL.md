@@ -19,7 +19,7 @@ A rule watches for a **trigger**, optionally filters with **conditions**, option
 
 ---
 
-## 3. Creating a rule
+## 3. Creating and managing a rule
 
 1. Click **New automation rule**.
 2. Set a **name**, choose **project(s)** (or "all projects"), toggle **enabled**.
@@ -32,6 +32,15 @@ A rule watches for a **trigger**, optionally filters with **conditions**, option
 
 Rules are edited in a visual node editor. Each node has its own configuration form.
 
+From the rule's context menu (right-click) you can:
+
+- **Open** — view the rule.
+- **Pipelines** — view run history.
+- **Settings** — edit.
+- **Copy** — duplicate the rule (saved disabled).
+- **Enable / Disable** — toggle the rule on/off without deleting it.
+- **Delete** — remove the rule.
+
 ---
 
 ## 4. Triggers (WHEN)
@@ -39,13 +48,16 @@ Rules are edited in a visual node editor. Each node has its own configuration fo
 | Trigger | Description |
 |---|---|
 | Issue created / updated / deleted | Fires on issue CRUD. |
+| Issue assigned | Fires when an issue's assignee changes. |
 | Issue comment created / edited / deleted | Fires on comment CRUD. |
 | Field value changed | Fires when a monitored field changes (with change type: any / added / removed). |
 | Issue moved | Fires when an issue's project changes. |
 | Issue transitioned | Fires when an issue's status changes. |
+| Issue relation created / deleted | Fires when an issue is linked / unlinked (optionally filtered by link type). |
 | Manual trigger | Run manually from the issue's actions menu (subject to permission + project/tracker scope). |
 | Spent time created / edited / deleted | Fires on time-entry CRUD. |
 | Scheduled | Fires on a recurring interval (e.g. every N minutes/hours/days). |
+| Incoming webhook | Triggered by an external HTTP call (see §13). |
 
 ---
 
@@ -56,6 +68,7 @@ Rules are edited in a visual node editor. Each node has its own configuration fo
 | Issue filter condition | Filter the issue by native Redmine fields (tracker, status, priority, assignee, custom fields…). |
 | Scope condition | Limit the rule to a scope. |
 | RQL condition | Expression-based condition (see §8). |
+| Related items condition | Check related issues (parent/sub-tasks/linked/created) by presence, count, or RQL (see §9). |
 
 If a condition is not satisfied, the rule **skips** (stops) — it does not fail.
 
@@ -83,13 +96,13 @@ A branch runs the following actions against each matching related issue:
 | Clone issue | Copy an issue. |
 | Comment on issue | Add a comment. |
 | Create issue / sub-task | Create a new issue / child. |
-| Edit issue / comment | Set field values / edit a comment. |
+| Edit issue / comment | Set field values (incl. status and project) / edit a comment. |
 | Delete issue / attachments / issue links | Remove data (irreversible). |
 | Link issues | Create a relation. |
 | Log work | Create a time entry. |
 | Manage watchers | Add / remove watchers. |
 | Send email | Email with configurable to/cc/bcc/subject/body. |
-| Send web request | HTTP request (webhook) with method, headers, body, expected status. |
+| Send web request | HTTP request (webhook) with method, headers, body, expected status; retries twice on failure. |
 | Log action | Write a custom message to the rule's log. |
 
 ---
@@ -138,7 +151,24 @@ Custom fields: `{{issue.cf_<id>}}` (e.g. `{{issue.cf_4}}`).
 
 ---
 
-## 9. Tokens (smart values)
+## 9. Related Items condition
+
+Checks a set of related issues against a criterion.
+
+**Item options** (which related issues to consider): parent, current, sub-tasks, linked, created.
+
+**Condition options**:
+
+| Condition | Meaning |
+|---|---|
+| are present / not present | Whether any related issue exists. |
+| exists / not exists | Alias of presence checks. |
+| count equals / greater than / less than | Compare the number of related issues to a count. |
+| match RQL / do not match RQL / at least one matches RQL | Evaluate an RQL expression against each related issue. |
+
+---
+
+## 10. Tokens (smart values)
 
 Tokens can be used in most text fields (comment, email body, web request, etc.) using `{{...}}`:
 
@@ -149,14 +179,65 @@ Tokens can be used in most text fields (comment, email body, web request, etc.) 
 
 ---
 
-## 10. Pipelines and logs
+## 11. Pipelines and logs
 
 - Each rule run creates a **pipeline** with a status (scheduled / in progress / success / failed).
 - **Automation → Pipelines** and **Automation → Logs** show run history and per-action messages.
+- Logs are stored in the database and auto-purged after the configured retention period (see §12).
 
 ---
 
-## 11. Permissions
+## 12. Settings (Configure screen)
+
+**Administration → Plugins → Configure** (on this plugin) offers:
+
+| Setting | Purpose |
+|---|---|
+| Enable scheduled triggers | Turn the scheduler on/off. |
+| Scheduler interval | How often the scheduler checks for due triggers (see §13). |
+| Log retention (days) | Auto-purge automation logs older than N days (0 = keep forever). |
+| Webhook timeout (seconds) | Timeout for the Send Web Request action. |
+| Webhook allowed hosts | Comma-separated hostnames allowed for web requests (blank = any). |
+| Debug mode | Write extra detail to `log/production.log`. |
+
+---
+
+## 13. Scheduling and the incoming webhook
+
+### Scheduled triggers
+
+The scheduler must be run on a recurring basis. Schedule this via cron (or a systemd timer):
+
+```
+*/5 * * * * cd /data/redmine && RAILS_ENV=production bundle exec rake redmine_plus_automation:run_scheduled_triggers
+```
+
+Match the cron interval to the scheduler interval in the settings.
+
+Other rake tasks:
+
+```bash
+# Purge old logs (uses the retention setting)
+bundle exec rake redmine_plus_automation:purge_logs
+
+# Export / import a rule as JSON
+bundle exec rake redmine_plus_automation:export_rule ID=1
+bundle exec rake redmine_plus_automation:import_rule FILE=automation_rule_1.json
+```
+
+### Incoming webhook
+
+Trigger rules from an external system by posting:
+
+```
+POST /automation_webhooks   { "issue_id": 123 }
+```
+
+This runs all enabled rules with an Incoming Webhook trigger against the given issue. The endpoint is unauthenticated — restrict access at the network layer.
+
+---
+
+## 14. Permissions
 
 Roles have two automation permissions:
 

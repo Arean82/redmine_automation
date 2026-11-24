@@ -2,8 +2,9 @@
 
 Workflow automation for Redmine — build rule-based automations with triggers, conditions, branches and actions.
 
-- **Author:** arean narrayan — <arean@synorastudio.in>
+- **Author:** Arean Narrayan — <arean@synorastudio.in>
 - **Repository:** https://github.com/Arean82/redmine_plus_automation
+- **Version:** 1.0.0
 - **License:** GPL v3
 - **Requires:** Redmine 7.x, Ruby 3.x+, PostgreSQL
 
@@ -13,17 +14,21 @@ Workflow automation for Redmine — build rule-based automations with triggers, 
 
 **Triggers** — events that start a rule:
 - Issue created / updated / deleted
+- Issue assigned
 - Issue comment created / edited / deleted
 - Field value changed
 - Issue moved / transitioned
+- Issue relation created / deleted
 - Manual trigger (from the issue menu)
 - Spent time logged / edited / deleted
 - Scheduled (recurring)
+- Incoming webhook (external HTTP call)
 
 **Conditions** — filters that gate the rule:
 - Issue filter condition (native Redmine filters)
 - Scope condition
 - RQL condition (expression-based, see below)
+- Related items condition (parent/sub-tasks/linked by presence, count, or RQL)
 
 **Branches** — run against related issues:
 - Current issue, parent issue, sub-tasks, linked issues, created issue
@@ -35,6 +40,12 @@ Workflow automation for Redmine — build rule-based automations with triggers, 
 - Send email, Send web request (webhook), Log action
 
 **Smart values (tokens)** — `{{issue.subject}}`, `{{issue.assignee.name}}`, `{{initiator.name}}`, etc.
+
+**Settings** — a Configure screen (Administration → Plugins → Configure):
+- Scheduler (enable/interval)
+- Log retention (days)
+- Webhook timeout + allowed hosts
+- Debug mode
 
 ## Installation
 
@@ -52,6 +63,36 @@ RAILS_ENV=production bundle exec rake redmine:plugins:migrate
 # 4. restart
 sudo systemctl restart redmine sidekiq
 ```
+
+## Rake tasks
+
+```bash
+# Run due scheduled triggers (schedule this via cron/systemd timer)
+RAILS_ENV=production bundle exec rake redmine_plus_automation:run_scheduled_triggers
+
+# Purge logs older than the configured retention period
+RAILS_ENV=production bundle exec rake redmine_plus_automation:purge_logs
+
+# Export / import a rule as JSON
+RAILS_ENV=production bundle exec rake redmine_plus_automation:export_rule ID=1
+RAILS_ENV=production bundle exec rake redmine_plus_automation:import_rule FILE=automation_rule_1.json
+```
+
+To run scheduled triggers on a recurring basis, add a cron entry, e.g.:
+
+```
+*/5 * * * * cd /data/redmine && RAILS_ENV=production bundle exec rake redmine_plus_automation:run_scheduled_triggers
+```
+
+## Incoming webhook
+
+Trigger rules from an external system:
+
+```
+POST /automation_webhooks   { "issue_id": 123 }
+```
+
+Runs all enabled rules with an Incoming Webhook trigger against the given issue. Note: the endpoint is unauthenticated — restrict access at the network layer (firewall/reverse proxy).
 
 ## Uninstallation
 
