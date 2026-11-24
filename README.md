@@ -8,8 +8,6 @@ Workflow automation for Redmine — build rule-based automations with triggers, 
 - **License:** GPL v3
 - **Requires:** Redmine 6.x or later, Ruby 3.x+, PostgreSQL
 
-> Originally developed by INTEGRITY SOFTWARE LIMITED (redmineplus.com), released under GPLv3.
-
 ## Features
 
 **Triggers** — events that start a rule:
