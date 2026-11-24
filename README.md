@@ -6,7 +6,7 @@ Workflow automation for Redmine — build rule-based automations with triggers, 
 - **Repository:** https://github.com/Arean82/redmine_plus_automation
 - **Version:** 1.0.0
 - **License:** GPL v3
-- **Requires:** Redmine 7.x, Ruby 3.x+, PostgreSQL
+- **Requires:** Redmine 6.x or later, Ruby 3.x+, PostgreSQL
 
 > Originally developed by INTEGRITY SOFTWARE LIMITED (redmineplus.com), released under GPLv3.
 
@@ -29,12 +29,13 @@ Workflow automation for Redmine — build rule-based automations with triggers, 
 - Scope condition
 - RQL condition (expression-based, see below)
 - Related items condition (parent/sub-tasks/linked by presence, count, or RQL)
+- Condition logic: all conditions must match (AND) or any can match (OR)
 
 **Branches** — run against related issues:
 - Current issue, parent issue, sub-tasks, linked issues, created issue
 
-**Actions** — what the rule does (16 total):
-- Assign, Clone, Comment, Create issue / sub-task, Edit issue / comment
+**Actions** — what the rule does (17 total):
+- Add attachment, Assign, Clone, Comment, Create issue / sub-task, Edit issue / comment
 - Delete issue / attachments / issue links
 - Link issues, Log work, Manage watchers
 - Send email, Send web request (webhook), Log action

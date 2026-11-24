@@ -70,7 +70,14 @@ From the rule's context menu (right-click) you can:
 | RQL condition | Expression-based condition (see §8). |
 | Related items condition | Check related issues (parent/sub-tasks/linked/created) by presence, count, or RQL (see §9). |
 
-If a condition is not satisfied, the rule **skips** (stops) — it does not fail.
+### Condition logic (AND / OR)
+
+Each rule has a **condition logic** setting (on the rule form):
+
+- **All conditions must match (AND)** — the rule runs only if every condition passes.
+- **Any condition can match (OR)** — the rule runs if at least one condition passes.
+
+If a condition is not satisfied under AND logic, the rule **skips** (stops) — it does not fail.
 
 ---
 
@@ -92,6 +99,7 @@ A branch runs the following actions against each matching related issue:
 
 | Action | What it does |
 |---|---|
+| Add attachment | Attach a file to the issue (from literal content or a URL). |
 | Assign issue | Assign to a user / group / role / copied-from-field / parent, with methods balanced / random / round-robin. |
 | Clone issue | Copy an issue. |
 | Comment on issue | Add a comment. |

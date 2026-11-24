@@ -6,6 +6,11 @@
     <div class="box tabular">
       <p><%= f.text_field :name, size: 50, required: true %></p>
       <p><%= f.text_area :description, rows: 7 %></p>
+      <p>
+        <%= label_tag 'automation_rule_condition_logic', l(:label_condition_logic) %>
+        <%= f.select :condition_logic,
+              [[l(:label_condition_logic_all), 'and'], [l(:label_condition_logic_any), 'or']] %>
+      </p>
       <% if @automation_rule.enabled %>
         <p><%= f.check_box :enabled %></p>
       <% end %>

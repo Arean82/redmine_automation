@@ -28,7 +28,7 @@ Redmine::Plugin.register :redmine_plus_automation do
   url 'https://github.com/Arean82/redmine_plus_automation'
   author_url 'https://github.com/Arean82'
 
-  requires_redmine version_or_higher: '5.0'
+  requires_redmine version_or_higher: '6.0'
 
   settings default: {
     scheduler_enabled: '1',

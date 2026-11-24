@@ -6,7 +6,7 @@ class AutomationRule < ActiveRecord::Base
   has_many :automation_nodes, dependent: :delete_all
   has_many :automation_pipelines, dependent: :delete_all
 
-  safe_attributes "name", "author_id", "description", "enabled", "project_ids", "is_for_all"
+  safe_attributes "name", "author_id", "description", "enabled", "project_ids", "is_for_all", "condition_logic"
 
   scope :enabled, -> { where(enabled: true) }
   scope :for_project, ->(project) do

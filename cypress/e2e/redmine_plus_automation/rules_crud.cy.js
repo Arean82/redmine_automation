@@ -24,8 +24,7 @@ describe("Rules CRUD operations", () => {
       cy.get("input[testid=submit-automation]").click();
       cy.contains("New Rule");
       cy.contains("Disabled");
-      cy.contains("Save and enable");
-      cy.contains("Add a trigger");
+      cy.contains("WHEN (trigger)");
     });
 
     it("checks the rule in the project", () => {
@@ -57,8 +56,7 @@ describe("Rules CRUD operations", () => {
       cy.get("#automation_rule_form input[name=commit]").click();
       cy.contains("Edited Rule in show page");
       cy.contains("Disabled");
-      cy.contains("Save and enable");
-      cy.contains("Add a trigger");
+      cy.contains("WHEN (trigger)");
     });
 
     it("deletes a rule", () => {
@@ -85,8 +83,7 @@ describe("Rules CRUD operations", () => {
       cy.get("input[testid=submit-automation]").click();
       cy.contains("New Rule");
       cy.contains("Disabled");
-      cy.contains("Save and enable");
-      cy.contains("Add a trigger");
+      cy.contains("WHEN (trigger)");
     });
 
     it("checks the rule in the project", () => {
@@ -119,8 +116,7 @@ describe("Rules CRUD operations", () => {
       cy.get("#automation_rule_form input[name=commit]").click();
       cy.contains("Edited Rule in show page");
       cy.contains("Disabled");
-      cy.contains("Save and enable");
-      cy.contains("Add a trigger");
+      cy.contains("WHEN (trigger)");
     });
 
     it("deletes a rule", () => {

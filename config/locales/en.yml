@@ -30,6 +30,9 @@ en:
   button_copy: "Copy"
   button_enable: "Enable"
   button_disable: "Disable"
+  label_condition_logic: "Condition logic"
+  label_condition_logic_all: "All conditions must match (AND)"
+  label_condition_logic_any: "Any condition can match (OR)"
   activerecord:
     attributes:
       automation_nodes:
@@ -38,6 +41,12 @@ en:
             related_issues: "Related issues"
   automation_nodes:
     actions:
+      add_attachment:
+        title: "Add attachment"
+        description: "Attach a file to the issue."
+        messages:
+          success: "Added attachment %{filename} to %{entity}"
+          failure_invalid: "Failed to add attachment to %{entity}: %{errors}"
       assign_issue:
         title: "Assign issue"
         description: "There are numerous ways to assign issues to users - from specifying the user, to copying from other issues and fields."

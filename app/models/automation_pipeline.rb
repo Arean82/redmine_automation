@@ -15,7 +15,15 @@ class AutomationPipeline < ActiveRecord::Base
   # @todo generate uuid
 
   def run!
-    pipeline_nodes.each do |node|
+    condition_nodes, other_nodes = pipeline_nodes.partition(&:condition?)
+
+    if condition_nodes.any?
+      results = condition_nodes.map { |node| self.prev_result = node.run!(self) }
+      passed = automation_rule.condition_logic == 'or' ? results.any?(&:success?) : results.all?(&:success?)
+      return false unless passed
+    end
+
+    other_nodes.each do |node|
       self.prev_result = node.run!(self)
 
       return false unless prev_result.success?
