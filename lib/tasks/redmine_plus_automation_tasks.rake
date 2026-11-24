@@ -1,4 +1,4 @@
-namespace :redmine_plus_automation do
+namespace :redmine_automation do
   desc 'Run due scheduled automation triggers'
   task run_scheduled_triggers: :environment do
     User.current.as_automation_admin do
@@ -8,7 +8,7 @@ namespace :redmine_plus_automation do
 
   desc 'Purge automation logs older than the configured retention period'
   task purge_logs: :environment do
-    settings = Setting.plugin_redmine_plus_automation || {}
+    settings = Setting.plugin_redmine_automation || {}
     days = (settings['log_retention_days'].presence || 0).to_i
 
     if days > 0

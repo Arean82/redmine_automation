@@ -1,9 +1,9 @@
-# Redmine Plus Automation
+# Redmine Automation
 
 Workflow automation for Redmine — build rule-based automations with triggers, conditions, branches and actions.
 
 - **Author:** Arean Narrayan — <arean@synorastudio.in>
-- **Repository:** https://github.com/Arean82/redmine_plus_automation
+- **Repository:** https://github.com/Arean82/redmine_automation
 - **Version:** 1.0.0
 - **License:** GPL v3
 - **Requires:** Redmine 6.x or later, Ruby 3.x+, PostgreSQL
@@ -51,9 +51,9 @@ Workflow automation for Redmine — build rule-based automations with triggers, 
 ## Installation
 
 ```bash
-# 1. copy into the plugins directory (folder must be named redmine_plus_automation)
-cp -a redmine_plus_automation /data/redmine/plugins/redmine_plus_automation
-chown -R <redmine_user>:<redmine_group> /data/redmine/plugins/redmine_plus_automation
+# 1. copy into the plugins directory (folder must be named redmine_automation)
+cp -a redmine_automation /data/redmine/plugins/redmine_automation
+chown -R <redmine_user>:<redmine_group> /data/redmine/plugins/redmine_automation
 
 # 2. install the gem dependency (httparty)
 cd /data/redmine && bundle install
@@ -69,20 +69,20 @@ sudo systemctl restart redmine sidekiq
 
 ```bash
 # Run due scheduled triggers (schedule this via cron/systemd timer)
-RAILS_ENV=production bundle exec rake redmine_plus_automation:run_scheduled_triggers
+RAILS_ENV=production bundle exec rake redmine_automation:run_scheduled_triggers
 
 # Purge logs older than the configured retention period
-RAILS_ENV=production bundle exec rake redmine_plus_automation:purge_logs
+RAILS_ENV=production bundle exec rake redmine_automation:purge_logs
 
 # Export / import a rule as JSON
-RAILS_ENV=production bundle exec rake redmine_plus_automation:export_rule ID=1
-RAILS_ENV=production bundle exec rake redmine_plus_automation:import_rule FILE=automation_rule_1.json
+RAILS_ENV=production bundle exec rake redmine_automation:export_rule ID=1
+RAILS_ENV=production bundle exec rake redmine_automation:import_rule FILE=automation_rule_1.json
 ```
 
 To run scheduled triggers on a recurring basis, add a cron entry, e.g.:
 
 ```
-*/5 * * * * cd /data/redmine && RAILS_ENV=production bundle exec rake redmine_plus_automation:run_scheduled_triggers
+*/5 * * * * cd /data/redmine && RAILS_ENV=production bundle exec rake redmine_automation:run_scheduled_triggers
 ```
 
 ## Incoming webhook
@@ -102,10 +102,10 @@ Runs all enabled rules with an Incoming Webhook trigger against the given issue.
 sudo systemctl stop redmine sidekiq
 
 # 2. roll back migrations
-cd /data/redmine && RAILS_ENV=production bundle exec rake redmine:plugins:migrate NAME=redmine_plus_automation VERSION=0
+cd /data/redmine && RAILS_ENV=production bundle exec rake redmine:plugins:migrate NAME=redmine_automation VERSION=0
 
 # 3. remove the plugin
-sudo rm -rf /data/redmine/plugins/redmine_plus_automation
+sudo rm -rf /data/redmine/plugins/redmine_automation
 
 # 4. start
 sudo systemctl start redmine sidekiq

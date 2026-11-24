@@ -1,4 +1,4 @@
-# Redmine Plus Automation — User Manual
+# Redmine Automation — User Manual
 
 ## 1. Overview
 
@@ -217,7 +217,7 @@ Tokens can be used in most text fields (comment, email body, web request, etc.) 
 The scheduler must be run on a recurring basis. Schedule this via cron (or a systemd timer):
 
 ```
-*/5 * * * * cd /data/redmine && RAILS_ENV=production bundle exec rake redmine_plus_automation:run_scheduled_triggers
+*/5 * * * * cd /data/redmine && RAILS_ENV=production bundle exec rake redmine_automation:run_scheduled_triggers
 ```
 
 Match the cron interval to the scheduler interval in the settings.
@@ -226,11 +226,11 @@ Other rake tasks:
 
 ```bash
 # Purge old logs (uses the retention setting)
-bundle exec rake redmine_plus_automation:purge_logs
+bundle exec rake redmine_automation:purge_logs
 
 # Export / import a rule as JSON
-bundle exec rake redmine_plus_automation:export_rule ID=1
-bundle exec rake redmine_plus_automation:import_rule FILE=automation_rule_1.json
+bundle exec rake redmine_automation:export_rule ID=1
+bundle exec rake redmine_automation:import_rule FILE=automation_rule_1.json
 ```
 
 ### Incoming webhook

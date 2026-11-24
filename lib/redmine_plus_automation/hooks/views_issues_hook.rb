@@ -6,7 +6,7 @@ module RedminePlusAutomation
 
     # If you want to include the React component globally
     # def view_layouts_base_html_head(context = {})
-    #   javascript_include_tag('redmine_plus_automation_bundle', plugin: :redmine_plus_automation)
+    #   javascript_include_tag('redmine_plus_automation_bundle', plugin: :redmine_automation)
     # end
     end
   end

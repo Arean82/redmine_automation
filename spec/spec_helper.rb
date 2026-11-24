@@ -1,5 +1,5 @@
 # run test
-# rspec -Iplugins/redmine_plus_automation/spec  plugins/redmine_plus_automation/spec
+# rspec -Iplugins/redmine_automation/spec  plugins/redmine_automation/spec
 
 ENV['RAILS_ENV'] ||= 'test'
 
@@ -41,9 +41,9 @@ RSpec.configure do |config|
   config.mock_with :rspec
   config.filter_run :focus => true
   config.run_all_when_everything_filtered = true
-  config.default_path = 'plugins/redmine_plus_automation/spec'
+  config.default_path = 'plugins/redmine_automation/spec'
   # config.fixture_path = "#{::Rails.root}/test/fixtures"
-  # config.file_fixture_path = "#{::Rails.root}/plugins/redmine_plus_automation/spec/fixtures/files"
+  # config.file_fixture_path = "#{::Rails.root}/plugins/redmine_automation/spec/fixtures/files"
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
   config.include AssertSelectRoot, :type => :request

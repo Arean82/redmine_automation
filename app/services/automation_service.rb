@@ -60,7 +60,7 @@ class AutomationService
   end
 
   def debug(message)
-    settings = Setting.plugin_redmine_plus_automation || {}
+    settings = Setting.plugin_redmine_automation || {}
     Rails.logger.info("[automation] #{message}") if settings['debug_mode'] == '1'
   end
 

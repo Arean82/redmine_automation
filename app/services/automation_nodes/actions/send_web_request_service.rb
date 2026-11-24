@@ -21,7 +21,7 @@ module AutomationNodes
 
         validate_host!(url)
 
-        settings = Setting.plugin_redmine_plus_automation || {}
+        settings = Setting.plugin_redmine_automation || {}
         timeout = (settings['webhook_timeout'].presence || 10).to_i
         retries = 2
 
@@ -43,7 +43,7 @@ module AutomationNodes
       end
 
       def validate_host!(request_url)
-        settings = Setting.plugin_redmine_plus_automation || {}
+        settings = Setting.plugin_redmine_automation || {}
         allowed = settings['webhook_allowed_hosts'].to_s.split(",").map(&:strip).reject(&:blank?)
         return if allowed.empty?
 

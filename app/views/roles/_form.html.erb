@@ -16,13 +16,13 @@
 
 
 
-<!--redmine_plus_automation-->
+<!--redmine_automation-->
   <% unless @role.anonymous? %>
     <p>
       <%= f.select :automation_rules_visibility, Role::AUTOMATION_RULES_VISIBILITY_OPTIONS.collect { |v| [l(v.last), v.first] } %>
     </p>
   <% end %>
-<!--redmine_plus_automation-->
+<!--redmine_automation-->
 
 
 

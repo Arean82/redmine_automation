@@ -1,4 +1,4 @@
-# This file is a part of Redmine Automation (redmine_plus_automation) plugin,
+# This file is a part of Redmine Automation (redmine_automation) plugin,
 # Redmine automation plugin for redmine
 #
 # Copyright (C) 2025 INTEGRITY SOFTWARE LIMITED
@@ -7,25 +7,25 @@
 #
 # Developed by Arean Narrayan <arean@synorastudio.in>
 #
-# redmine_plus_automation is free software: you can redistribute it and/or modify
+# redmine_automation is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# redmine_plus_automation is distributed in the hope that it will be useful,
+# redmine_automation is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with redmine_plus_automation. If not, see <http://www.gnu.org/licenses/>.
+# along with redmine_automation. If not, see <http://www.gnu.org/licenses/>.
 
-Redmine::Plugin.register :redmine_plus_automation do
-  name 'Redmine Plus Automation plugin'
+Redmine::Plugin.register :redmine_automation do
+  name 'Redmine Automation plugin'
   author 'Arean Narrayan'
   description 'This is an automation plugin for Redmine'
   version '1.0.0'
-  url 'https://github.com/Arean82/redmine_plus_automation'
+  url 'https://github.com/Arean82/redmine_automation'
   author_url 'https://github.com/Arean82'
 
   requires_redmine version_or_higher: '6.0'
@@ -38,19 +38,19 @@ Redmine::Plugin.register :redmine_plus_automation do
     webhook_timeout: '10',
     webhook_allowed_hosts: '',
     debug_mode: '0'
-  }, partial: 'settings/redmine_plus_automation_settings'
+  }, partial: 'settings/redmine_automation_settings'
 
   menu :admin_menu, :automation_rules, { controller: 'automation_rules', action: 'index' },
        caption: :label_automation_rules,
        html: { class: 'icon' },
-       plugin: :redmine_plus_automation,
+       plugin: :redmine_automation,
        icon: 'automation'
 
   menu :project_menu, :automation_rules, { controller: 'automation_rules', action: 'index' },
        caption: :label_automation_rules,
        after: :gantt,
        param: :project_id,
-       plugin: :redmine_plus_automation,
+       plugin: :redmine_automation,
        icon: 'automation'
 
   project_module :automation_rules do
