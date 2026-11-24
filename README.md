@@ -97,11 +97,13 @@ Runs all enabled rules with an Incoming Webhook trigger against the given issue.
 
 ## Uninstallation
 
+This is a **clean** uninstall — step 2 drops the plugin's tables and removes the added columns, and step 3 deletes the plugin folder.
+
 ```bash
 # 1. stop
 sudo systemctl stop redmine sidekiq
 
-# 2. roll back migrations
+# 2. roll back migrations (drops the automation_* tables and removes the added columns)
 cd /data/redmine && RAILS_ENV=production bundle exec rake redmine:plugins:migrate NAME=redmine_automation VERSION=0
 
 # 3. remove the plugin
@@ -110,6 +112,8 @@ sudo rm -rf /data/redmine/plugins/redmine_automation
 # 4. start
 sudo systemctl start redmine sidekiq
 ```
+
+> Uninstalling deletes all automation data (rules, pipelines, logs). Back up the database first if you need to keep it.
 
 ## RQL (Redmine Query Language)
 
