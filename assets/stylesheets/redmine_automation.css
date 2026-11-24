@@ -1,0 +1,10 @@
+#admin-menu a.automation-rules { background-image: none; }
+.icon-automation { background-image: none; }
+.icon-stop { background-image: none; }
+#admin-menu a.automation-rules svg,
+.icon-automation svg {
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  margin-right: 4px;
+}
