@@ -1,7 +1,7 @@
 {
-  "name": "redmine_plus_automation",
+  "name": "redmine_automation",
   "version": "1.0.0",
-  "description": "= redmine_plus_automation",
+  "description": "= redmine_automation",
   "main": "index.jsx",
   "type": "commonjs",
   "directories": {

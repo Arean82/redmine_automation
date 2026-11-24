@@ -101,7 +101,7 @@ class AutomationRulesController < ApplicationController
   def update_nodes
     @automation_rule.safe_attributes = params[:automation_rule]
     if params[:nodes]
-      RedminePlusAutomation::AutomationNodes::Upsert.new(node_params, @automation_rule).call
+      RedmineAutomation::AutomationNodes::Upsert.new(node_params, @automation_rule).call
     end
     @automation_rule.save
     respond_to do |format|

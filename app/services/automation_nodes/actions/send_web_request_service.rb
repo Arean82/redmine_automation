@@ -73,7 +73,7 @@ module AutomationNodes
           body = replace_tokens(node.body)
           JSON.parse(body).to_json
         when "issue_data"
-          RedminePlusAutomation::IssueJsonHandler.new(entity).to_json
+          RedmineAutomation::IssueJsonHandler.new(entity).to_json
         else
           ""
         end

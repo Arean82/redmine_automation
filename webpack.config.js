@@ -3,7 +3,7 @@ const mode = process.env.NODE_ENV || 'development';
 module.exports = {
   mode,
   entry: {
-    redmine_plus_automation_bundle: './frontend/index.tsx',
+    redmine_automation_bundle: './frontend/index.tsx',
     issues_dropdown_bundle: './frontend/components/App/Redmine/IssuesAutomationDropdownEntry.tsx'
   },
   output: {

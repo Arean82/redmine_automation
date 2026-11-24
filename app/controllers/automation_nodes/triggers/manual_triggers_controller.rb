@@ -14,7 +14,7 @@ module AutomationNodes
       end
 
       def visible_manual_triggers
-        visible_rules = RedminePlusAutomation::AutomationTriggers::ManualTriggers
+        visible_rules = RedmineAutomation::AutomationTriggers::ManualTriggers
                           .new(User.current, @issue).visible_manual_rules
 
         response = visible_rules.map do |rule|

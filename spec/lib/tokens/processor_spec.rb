@@ -1,6 +1,6 @@
 require_relative "../../spec_helper"
 
-describe RedminePlusAutomation::Tokens::Processor do
+describe RedmineAutomation::Tokens::Processor do
   let(:user) { FactoryBot.create(:user) }
   let(:project) { FactoryBot.create(:project) }
   let(:custom_field) { FactoryBot.create(:issue_custom_field, is_for_all: true, trackers: project.trackers) }

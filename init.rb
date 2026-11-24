@@ -73,5 +73,5 @@ Redmine::Plugin.register :redmine_automation do
 
 end
 
-Dir[File.join(File.dirname(__FILE__), '/lib/redmine_plus_automation/**/*.rb')].each { |file| require_dependency file }
+Dir[File.join(File.dirname(__FILE__), '/lib/redmine_automation/**/*.rb')].each { |file| require_dependency file }
 Dir[File.join(File.dirname(__FILE__), '/app/services/**/*.rb')].each { |file| require_dependency file }

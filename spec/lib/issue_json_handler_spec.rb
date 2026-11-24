@@ -1,6 +1,6 @@
 require_relative '../spec_helper'
 
-describe RedminePlusAutomation::IssueJsonHandler do
+describe RedmineAutomation::IssueJsonHandler do
   let(:issue) { FactoryBot.create(:issue) }
   let(:issue_json_handler) { described_class.new(issue) }
 

@@ -2,7 +2,7 @@ class AutomationTriggersController < ApplicationController
   before_action :authorize_global
 
   def available_monitored_fields
-    render json: RedminePlusAutomation::AutomationTriggers::MonitoredFields.all
+    render json: RedmineAutomation::AutomationTriggers::MonitoredFields.all
   end
 
   def available_projects
@@ -23,11 +23,11 @@ class AutomationTriggersController < ApplicationController
   end
 
   def available_filters
-    render json: RedminePlusAutomation::Conditions::AvailableFilters.all
+    render json: RedmineAutomation::Conditions::AvailableFilters.all
   end
 
   def filter_conditions
-    render json: RedminePlusAutomation::Conditions::FilterConditions.new(params[:filter]).conditions
+    render json: RedmineAutomation::Conditions::FilterConditions.new(params[:filter]).conditions
   end
 
   def available_values
@@ -61,7 +61,7 @@ class AutomationTriggersController < ApplicationController
   end
 
   def available_tokens
-    render json: RedminePlusAutomation::AutomationTokens.all
+    render json: RedmineAutomation::AutomationTokens.all
   end
 
   def available_values_with_tokens
@@ -70,7 +70,7 @@ class AutomationTriggersController < ApplicationController
     values.each do |pair|
       pair[1] = "initiator.id" if pair[1] == "me"
     end
-    tokens = RedminePlusAutomation::AutomationTokens.tokens_by_column_name[params[:filter]] || []
+    tokens = RedmineAutomation::AutomationTokens.tokens_by_column_name[params[:filter]] || []
 
     render json: tokens.concat(values.map { |value| { value: value[1], label: value[0] } })
   end

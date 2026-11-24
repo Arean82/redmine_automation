@@ -1,6 +1,6 @@
 require_relative "../../../spec_helper"
 
-describe RedminePlusAutomation::Tokens::Handlers::DateHandler do
+describe RedmineAutomation::Tokens::Handlers::DateHandler do
   describe "#value_for" do
     let(:object) { Date.today }
     let(:handler) { described_class.new(object) }

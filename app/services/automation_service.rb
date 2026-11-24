@@ -42,7 +42,7 @@ class AutomationService
   # @param text [String] The string containing tokens.
   # @return [String] The processed string with tokens replaced.
   def replace_tokens(text)
-    RedminePlusAutomation::Tokens::Processor.replace(text, issue: entity, initiator: pipeline.author)
+    RedmineAutomation::Tokens::Processor.replace(text, issue: entity, initiator: pipeline.author)
   end
 
   # Resolves a single token string to its value.
@@ -56,7 +56,7 @@ class AutomationService
       today: Date.today,
       now: DateTime.now
     }
-    RedminePlusAutomation::Tokens::Processor.resolve_token(token, context) || token
+    RedmineAutomation::Tokens::Processor.resolve_token(token, context) || token
   end
 
   def debug(message)

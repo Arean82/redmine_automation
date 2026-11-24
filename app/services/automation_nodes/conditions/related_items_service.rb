@@ -84,7 +84,7 @@ module AutomationNodes
 
       def resolve_token_for(token, issue)
         context = { issue: issue, initiator: pipeline.author, today: Date.today, now: DateTime.now }
-        RedminePlusAutomation::Tokens::Processor.resolve_token(token, context) || token
+        RedmineAutomation::Tokens::Processor.resolve_token(token, context) || token
       end
 
       def compare(left, operator, right)
