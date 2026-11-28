@@ -5,7 +5,7 @@
 [![Ruby](https://img.shields.io/badge/ruby-%3E%3D3.2-red?logo=ruby&logoColor=white)](https://www.ruby-lang.org)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-*Maintained and developed by **Arean Narrayan** (<arean@synorastudio.in>)*  
+*Developed and maintained by **Arean Narrayan** (<arean@synorastudio.in>)*
 
 ---
 
